@@ -34,7 +34,11 @@ export async function getStaticPaths() {
   client.close();
 
   return {
-    fallback: false,
+    fallback: "blocking",
+    //if false & there are no pregenerated pages, 404 error. no fallback.
+    //if set to true or "blocking": it will generate the page on demand and cache it.
+    //if true it will immediately return an empty page & pull down dynamically gen page when loaded
+    //if 'blocking' you will see nothing until the new page is loaded
     paths: meetups.map((meetup) => ({
       params: { meetupid: meetup._id.toString() },
     })),
